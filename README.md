@@ -5,11 +5,11 @@
 # Componentes
 
 Componente| Descripción|Tecnología
----|---
-customers-api| Spring Boot
-customers-web| Angular
-customers-openapi| Open api 3
-platform| Terraform & GCP
+---|---|---
+customers-api| |Spring Boot
+customers-web| |Angular
+customers-openapi| |Open api 3
+platform| |Terraform & GCP
 
 # Instalación
 
@@ -52,7 +52,26 @@ terraform apply
 ```
 ## Documentación Open Api
 
+```sh
+kubectl apply -f customers-openapi/deploy -n demo
+```
 ## Microservicio customer-api
+
+### Despliegue automatizado
+### Despliegue Manual
+```sh
+cd customers-api & ./mvnw clean package
+
+docker build -t micro-service-demo:1.0.0 .
+
+docker tag micro-service-demo:1.0.0
+
+docker push
+
+sed -i 's/image-version/micro-service-demo:1.0.0/g' deploy/deployment.yml
+
+kubectl apply -f deploy -n demo
+```
 
 ## Frontend App
 

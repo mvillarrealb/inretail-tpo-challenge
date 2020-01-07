@@ -11,4 +11,5 @@ spec:
     spec:
       containers:
       - name: swagger-ui
-        image: swaggerui
+        image: swaggerapi/swagger-ui
+        env:
