@@ -2,3 +2,5 @@ node_modules/*
 .idea/*
 .mvn/*
 .terraform
+.tfstate*
+/*.backup

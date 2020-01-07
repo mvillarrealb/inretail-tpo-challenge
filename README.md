@@ -41,6 +41,9 @@ gcloud iam service-accounts keys create ${PWD}/platform/service-account-key.json
 # Habilita la api de kubernetes para el projecto(debe haber billing account asociada)
 gcloud services enable container.googleapis.com
 
+# Habilita la api de container registry para el projecto(debe haber billing account asociada)
+gcloud services enable containerregistry.googleapis.com
+
 #Init terraform plugins
 terraform init
 
