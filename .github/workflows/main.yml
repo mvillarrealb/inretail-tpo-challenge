@@ -6,6 +6,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Build application Jar
+      working-directory: ./customers-api
       run: ./mvnw clean package
     - name: Login to gcloud registry
       id: gcloud
