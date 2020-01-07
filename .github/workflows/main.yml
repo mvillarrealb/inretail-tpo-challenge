@@ -19,6 +19,8 @@ jobs:
       if: success()
       uses: manusa/actions-publish-docker@master
       with:
-        name: gcr.io/inretail-tpo-challenge/${{ github.repository }}:${{ github.sha }}
+        name: inretail-tpo-challenge/customers-api
+        tag: ${{ github.sha }}
         username: ${{ steps.gcloud.outputs.username }}
         password: ${{ steps.gcloud.outputs.password }}
+        registry: gcr.io
