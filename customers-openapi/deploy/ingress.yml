@@ -1,17 +1,17 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: customers-api
+  name: swagger-ui
   annotations:
     kubernetes.io/ingress.global-static-ip-name: "inretail-tpo-challenge-ip"
   labels:
-    app: customers-api
+    app: swagger-ui
     tier: backend
 spec:
   rules:
   - http:
       paths:
-      - path: /api/v1/*
+      - path: /open-api/*
         backend:
-          serviceName: customers-api
-          servicePort: 8080
+          serviceName: swagger-ui
+          servicePort: 80
