@@ -61,6 +61,7 @@ kubectl apply -f customers-openapi/deploy -n demo
 ## Microservicio customer-api
 
 ### Despliegue automatizado
+
 ### Despliegue Manual
 ```sh
 cd customers-api & ./mvnw clean package
