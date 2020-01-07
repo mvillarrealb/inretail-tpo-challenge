@@ -18,6 +18,7 @@ jobs:
     - name: Create and push image
       if: success()
       uses: manusa/actions-publish-docker@master
+      working-directory: ./customers-api
       with:
         name: inretail-tpo-challenge/customers-api
         tag: ${{ github.sha }}
