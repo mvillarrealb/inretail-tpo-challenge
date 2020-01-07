@@ -1,0 +1,89 @@
+openapi: "3.0.0"
+info:
+  description: "Microservicio demo Marco Villarreal"
+  version: "1.0.0"
+  title: "customers-api"
+servers:
+  - url: http://localhost:8000
+    description: Entorno de local
+  - url: https://customers.cloudintercorpretail-dev.pe
+    description: Entorno de desarrollo
+  - url: https://customers.cloudintercorpretail-qa.pe
+    description: Entorno de calidad
+  - url: https://customers.cloudintercorpretail.pe
+    description: Entorno de producción
+tags:
+  - name: "customers"
+    description: "Administración de clientes"
+paths:
+  /customers:
+    post:
+      tags:
+        - "customers"
+      summary: "Crea un nuevo cliente"
+      description: "Crea una nuevo cliente en base a datos basicos como: nombre, apellido y fecha de nacimiento"
+      operationId: "createCustomer"
+      parameters:
+        - in: "body"
+          name: "customer"
+          description: "Datos del cliente"
+          schema:
+            $ref: "#/components/schemas/Customer"
+      responses:
+        201:
+          description: "Cliente creado exitosamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+        411:
+          description: "Error de validación creando el cliente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: "Error creando el cliente."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    get:
+      tags:
+        - "customers"
+      summary: "Lista los clientes de forma páginada"
+      operationId: "listCustomers"
+      parameters:
+        - in: "query"
+          name: "limit"
+          description: "Limite de registros por página."
+          schema:
+            type: "integer"
+            example: 10
+        - in: "query"
+          name: "offset"
+          description: "Cursor desde el cuál desea paginar."
+          schema:
+            type: "integer"
+            example: 0
+      responses:
+        200:
+          description: "Clientes listados éxitosamente"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Customer"
+        500:
+          description: "Error listando los clientes"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Error:
+      $ref: "./common/Error.json"
+    Customer:
+      $ref: "./schemas/Customer.json"

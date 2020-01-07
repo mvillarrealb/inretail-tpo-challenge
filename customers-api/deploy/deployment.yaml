@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customers-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: customers-api
+  template:
+    metadata:
+      labels:
+        tier: backend
+        app: customers-api
+    spec:
+      containers:
+      - name: customers-api
+        image: gcr.io/pe-intercorpretail-cld-01/customers-api:1.0.0
+        volumeMounts:
+          - name: config-volume
+            mountPath: /app/application.properties
+            subPath: application.properties
+        env:
+          - name: JAVA_OPTS
+            value: -Dmicronaut.config.files=file:/app/application.properties
+        envFrom:
+          - secretRef: 
+              name: customers-api-secret
+      volumes:
+        - name: config-volume
+          configMap:
+            name: customers-api

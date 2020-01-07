@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: customers-api
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: 'true'
+  labels:
+    app: customers-api
+    tier: backend
+spec:
+  tls:
+    - hosts:
+      - customers-api.cloudintercorpretail-qa.pe
+      secretName: customers-api-secret-tls
+  rules:
+    - host: customers-api.cloudintercorpretail-qa.pe
+      http:
+        paths:
+          - backend:
+              serviceName: customers-api
+              servicePort: 8080
+            path: /

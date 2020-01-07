@@ -1,0 +1,50 @@
+{
+	"type":"object",
+	"$schema":"http://json-schema.org/draft-04/schema#",
+	"title": "Customer",
+	"description": "Define los datos de un cliente demo",
+	"properties": {
+    "name": {
+      "type": "string",
+      "title": "Nombre del cliente",
+      "description": "Nombre del cliente, debe contener sólo letras y puede contener espacios",
+      "pattern": "^([a-z]|[A-Z]|'|á|é|í|ó|ú|ñ|ü|Á|É|Í|Ó|Ú|Ñ|Ü|\\s|\\'|\\-)+$",
+      "example": "Marco Antonio"
+    },
+    "lastName": {
+      "type": "string",
+      "title": "Apellido del cliente",
+      "description": "Apellido del cliente, debe contener sólo letras y puede contener espacios",
+      "pattern": "^([a-z]|[A-Z]|'|á|é|í|ó|ú|ñ|ü|Á|É|Í|Ó|Ú|Ñ|Ü|\\s|\\'|\\-)+$",
+      "example": "Villarreal Benites"
+    },
+    "birthDate": {
+      "type": "string",
+      "title": "Fecha de nacimiento",
+      "description": "Debe presentarse en formato yyyy-mm-dd",
+      "minLength": 10,
+      "maxLength": 10,
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$",
+      "example": "1989-09-11"
+    },
+    "age": {
+      "type": "integer",
+      "title": "Edad del cliente",
+      "description": "Edad calculada en base a la fecha de nacimiento",
+      "example": "30",
+      "readOnly": true
+    },
+    "probableDeathDate": {
+      "type": "string",
+      "title": "Fecha probable de muerte",
+      "description": "Fecha probable de muerte calculada en base a la edad y factores aleatorios",
+      "example": "2070-10-14",
+      "readOnly": true
+    }
+	},
+	"required": [
+    "name",
+    "lastName",
+    "birthDate"
+	]
+}

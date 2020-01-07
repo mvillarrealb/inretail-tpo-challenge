@@ -1,0 +1,27 @@
+{
+  "$schema":"http://json-schema.org/draft-04/schema#",
+  "title": "Error",
+  "type": "object",
+  "description": "Esquema para excepciones presentadas en la api",
+  "required": [
+    "name","message"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "title":"Nombre del error",
+      "example":"ValidationFailedException"
+    },
+    "message": {
+      "type": "string",
+      "message":"Mensaje del error",
+      "example": "Se han encontrado errores de validación"
+    },
+    "details": {
+      "type":"array",
+      "items": {
+        "$ref": "./ErrorDetail.json"
+      }
+    }
+  }
+}

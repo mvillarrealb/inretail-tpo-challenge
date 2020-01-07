@@ -1,0 +1,24 @@
+{
+  "$schema":"http://json-schema.org/draft-04/schema#",
+  "type":"object",
+  "title":"ErrorDetail",
+  "description":"Detalle de errores",
+  "properties":{
+     "field":{
+        "type":"string",
+        "description":"Campo que causó el error.",
+        "example": "name"
+     },
+     "value":{
+        "type":"string",
+        "description":"Valor del campo que causó el error.",
+        "example":"2189"
+     },
+     "issue":{
+        "type":"string",
+        "description":"Razón del error.",
+        "example": "Nombre dene contener sólo letras"
+     }
+  },
+   "required" : ["issue"]
+}
