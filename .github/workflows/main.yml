@@ -13,7 +13,7 @@ jobs:
       uses: elgohr/gcloud-login-action@master
       with:
         account_key: ${{ secrets.GCLOUD_KEY }}
-        GCLOUD_AUTH: ${{ secrets.GCLOUD_KEY }}
+        #GCLOUD_AUTH: ${{ secrets.GCLOUD_KEY }}
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
