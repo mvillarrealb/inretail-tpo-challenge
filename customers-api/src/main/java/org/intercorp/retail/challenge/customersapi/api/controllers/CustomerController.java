@@ -2,7 +2,6 @@ package org.intercorp.retail.challenge.customersapi.api.controllers;
 
 import org.intercorp.retail.challenge.customersapi.api.dtos.CustomerDTO;
 import org.intercorp.retail.challenge.customersapi.api.services.CustomerService;
-import org.intercorp.retail.challenge.customersapi.api.services.ICustomerService;
 import org.intercorp.retail.challenge.customersapi.domain.models.CustomerKpi;
 import org.springframework.beans.factory.annotation.Autowired;;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin("*")
 @RestController
 public class CustomerController {
 

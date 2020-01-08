@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/web-application-challenge",
+    "public": "dist/customers-web",
     "ignore": [
       "firebase.json",
       "**/.*",
