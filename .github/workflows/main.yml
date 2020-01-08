@@ -19,7 +19,7 @@ jobs:
     - name: build & publish image
       uses: mr-smithers-excellent/docker-build-push@v1.0
       with:
-       image: ${{ REGISTRY }}
+       image: mvillarreal-tpo-challenge/customers-api
        tag: ${{ github.sha }}
        registry: gcr.io
        username: _json_key
