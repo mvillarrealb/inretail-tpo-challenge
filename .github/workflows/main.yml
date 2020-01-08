@@ -9,23 +9,18 @@ jobs:
       id: build
       working-directory: ./customers-api
       run: ./mvnw clean package
-    - name: Login to gcloud registry
-      id: gcloud
-      uses: elgohr/gcloud-login-action@master
-      with:
-        account_key: ${{ secrets.GCLOUD_KEY }}
-      env:
-        GCLOUD_AUTH: ${{ secrets.GCLOUD_KEY }}
     - name: build & publish image
       uses: mr-smithers-excellent/docker-build-push@v1.0
       with:
        image: inretail-tpo-challenge/customers-api
+       tag: ${{ github.sha }}
        registry: gcr.io
        username: _json_key
        password: ${{ secrets.DOCKER_PASSWORD }}
     - name: deploy to google kubernetes engine
-      uses: steebchen/kubectl@master
-      env:
-        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
-        args: apply -f ./customers-api/deploy -n apps
+        service_account_key: ${{ secrets.GCLOUD_KEY }}
+      run: |
+        kubectl get deploy customers-api -n apps || kubectl apply -f ./customers-api/deploy -n apps
+        kubectl set image deploy/gcr.io/inretail-tpo-challenge/customers-api:${{ github.sha }} -n apps
