@@ -1,0 +1,4 @@
+<div [ngClass]="errorMessage ? 'control-message-error' : ''">
+    <ng-content></ng-content>
+    <div class="invalid-feedback" *ngIf="errorMessage !== null">{{errorMessage}}</div>
+</div>

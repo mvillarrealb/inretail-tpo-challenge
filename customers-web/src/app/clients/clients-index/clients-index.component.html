@@ -1,0 +1,15 @@
+<app-card title="Clientes" subtitle="Lista de clientes" (eventClick)="onEventClick()">
+    <div class="d-flex justify-content-center mb-3">
+        <div class="legend-clients">
+            <h4>
+                {{ getAverage() | number:'0.2-2' }}
+            </h4>
+            <small>PROMEDIO EDAD</small>
+        </div>
+        <div class="legend-clients">
+            <h4>{{ getStandardDeviation() | number:'0.2-2' }}</h4>
+            <small>DESVIACION ESTÁNDAR</small>
+        </div>
+    </div>
+    <app-clients-list (data)="clientsList = $event" (eventEdit)="onEventEdit($event)"></app-clients-list>
+</app-card>

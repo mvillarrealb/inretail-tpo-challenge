@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Registro Cliente</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" [formGroup]="form">
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <app-control-messages [control]="form.get('name')">
+                <label>Nombre</label>
+                <input type="text" class="form-control" placeholder="Nombre" formControlName="name">
+            </app-control-messages>
+        </div>
+        <div class="col-md-12 form-group">
+            <app-control-messages [control]="form.get('lastName')">
+                <label>Apellido</label>
+                <input type="text" class="form-control" placeholder="Apellidos" formControlName="lastName">
+            </app-control-messages>
+        </div>
+        <div class="col-md-12 form-group">
+            <app-control-messages [control]="form.get('birthDate')">
+                <label>Fecha de nacimiento</label>
+                <input type="text" class="form-control" placeholder="Fecha de nacimiento" placement="top" bsDatepicker [maxDate]="maxDate" formControlName="birthDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+            </app-control-messages>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="onClickSave()">Guardar</button>
+</div>
