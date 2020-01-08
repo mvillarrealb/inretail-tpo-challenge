@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Client } from '../../interfaces/client';
+import { Customer } from '../../interfaces/client';
 import { BsModalService } from 'ngx-bootstrap';
 import { ClientsFormComponent } from '../clients-form/clients-form.component';
-import * as moment from 'moment';
+import { ClientsService } from 'src/app/services/clients.service';
+import { CustomerKpi } from 'src/app/interfaces/customer.kpi';
 
 @Component({
     selector: 'app-clients-index',
@@ -10,45 +11,22 @@ import * as moment from 'moment';
     styles: []
 })
 export class ClientsIndexComponent implements OnInit {
-    clientsList: Client[] = [];
-    constructor(private bsModalRef: BsModalService) {}
+    customerKpi: CustomerKpi = new CustomerKpi({ ageAverage: 0.0, ageStandardDeviation: 0.0 });
+    constructor(private bsModalRef: BsModalService,
+        private clientService: ClientsService
+        ) {}
 
     ngOnInit() {
-        //
+        this.clientService.findKpis().subscribe((res: CustomerKpi) => {
+            this.customerKpi = res;
+        });
     }
 
     onEventClick() {
         this.showFormComponent();
     }
 
-    onEventEdit(client: Client) {
-        this.showFormComponent(client);
-    }
-
-    getAverage() {
-        if (this.clientsList.length) {
-            const total = this.getTotal();
-            return total / this.clientsList.length;
-        }
-        return 0;
-    }
-
-    getStandardDeviation() {
-        if (this.clientsList.length > 0) {
-            const total = this.getTotal();
-            const media = total / this.clientsList.length;
-            let sum = 0;
-            for (const item of this.clientsList) {
-                sum +=
-                    (Number(item.years) - media) * (Number(item.years) - media);
-            }
-            const vari = sum / this.clientsList.length;
-            return Math.sqrt(vari);
-        }
-        return 0;
-    }
-
-    private showFormComponent(client?: Client) {
+    private showFormComponent(client?: Customer) {
         const initialState: any = {};
         if (client) {
             initialState.client = client;
@@ -57,13 +35,5 @@ export class ClientsIndexComponent implements OnInit {
             class: 'modal-dialog-centered',
             initialState
         });
-    }
-
-    private getTotal() {
-        let sum = 0;
-        for (const item of this.clientsList) {
-            sum += Number(item.years);
-        }
-        return sum;
     }
 }

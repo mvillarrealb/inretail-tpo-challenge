@@ -2,13 +2,13 @@
     <div class="d-flex justify-content-center mb-3">
         <div class="legend-clients">
             <h4>
-                {{ getAverage() | number:'0.2-2' }}
+                {{ customerKpi.ageAverage | number:'0.2-2' }}
             </h4>
-            <small>PROMEDIO EDAD</small>
+            <small>Promedio Edades</small>
         </div>
         <div class="legend-clients">
-            <h4>{{ getStandardDeviation() | number:'0.2-2' }}</h4>
-            <small>DESVIACION ESTÁNDAR</small>
+            <h4>{{ customerKpi.ageStandardDeviation | number:'0.2-2' }}</h4>
+            <small>Desviación Estándar</small>
         </div>
     </div>
     <app-clients-list (data)="clientsList = $event" (eventEdit)="onEventEdit($event)"></app-clients-list>

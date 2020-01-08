@@ -3,16 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { ClientsIndexComponent } from './clients/clients-index/clients-index.component';
 import { ClientsProjectionComponent } from './clients/clients-projection/clients-projection.component';
 
-
 const routes: Routes = [
-    {
-        path: '',
-        component: ClientsIndexComponent
-    },
-    {
-        path: 'projection',
-        component: ClientsProjectionComponent
-    }
+    { path: '', component: ClientsIndexComponent },
+    { path: 'projection', component: ClientsProjectionComponent }
 ];
 
 @NgModule({

@@ -1,7 +1,9 @@
-export interface Client {
-    id: string;
+/**
+ * Input/output DTO for Customer information
+ */
+export interface Customer {
     name: string;
     lastName: string;
-    years: number;
+    age: number;
     birthDate: string;
 }

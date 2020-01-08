@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 import { SharedComponentsModule } from '../shared-components/shared-components.module';
 import { ModalModule, BsDatepickerModule } from 'ngx-bootstrap';
 
-const bookstores: any = [
+const additionalModules: any = [
     AngularFirestoreModule,
     SharedComponentsModule,
     ReactiveFormsModule
@@ -21,9 +21,9 @@ const bookstores: any = [
         AngularFireModule.initializeApp(environment.firebaseconfig),
         ModalModule.forRoot(),
         BsDatepickerModule.forRoot(),
-        ...bookstores
+        ...additionalModules
     ],
     declarations: [],
-    exports: [ModalModule, BsDatepickerModule, ...bookstores]
+    exports: [ModalModule, BsDatepickerModule, ...additionalModules]
 })
 export class CoreModule { }

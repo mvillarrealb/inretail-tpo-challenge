@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClientsService } from 'src/app/services/clients.service';
 import { CustomValidators } from 'ngx-custom-validators';
 import { ControlMessagesService } from 'src/app/services/control-messages.service';
-import { Client } from 'src/app/interfaces/client';
+import { Customer } from 'src/app/interfaces/client';
 import * as moment from 'moment';
 
 @Component({
@@ -14,11 +14,11 @@ import * as moment from 'moment';
 })
 export class ClientsFormComponent implements OnInit {
     form: FormGroup;
-    client: Client;
+    client: Customer;
     maxDate: any;
     constructor(
-        public bsModalRef: BsModalRef,
-        private fb: FormBuilder,
+        public modalReference: BsModalRef,
+        private formBuilder: FormBuilder,
         private clientsService: ClientsService
     ) {
         this.createform();
@@ -37,28 +37,19 @@ export class ClientsFormComponent implements OnInit {
         ControlMessagesService.markFormGroupTouched(this.form);
         if (this.form.valid) {
             const values = this.form.value;
-            values.birthDate = moment(values.birthDate).format('DD/MM/YYYY');
-            if (!this.client) {
-                this.clientsService.create(values).then(() => {
-                    /**
-                     * Success
-                     */
-                    this.form.reset();
-                });
-            } else {
-                this.clientsService.update(this.client.id, values).then(() => {
-                    /**
-                     * Error message
-                     */
-                    this.bsModalRef.hide();
-                    this.form.reset();
-                });
-            }
+            values.birthDate = moment(values.birthDate).format('YYYY-MM-DD');
+            this.clientsService.create(values).toPromise().then(() => {
+                /**
+                 * Success
+                 */
+                this.form.reset();
+                this.modalReference.hide();
+            });
         }
     }
 
     private createform() {
-        this.form = this.fb.group({
+        this.form = this.formBuilder.group({
             name: [null, [Validators.required]],
             lastName: [null, [Validators.required]],
             birthDate: [

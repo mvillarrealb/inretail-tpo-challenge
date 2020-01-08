@@ -29,9 +29,7 @@
                         "styles": [
                             "src/styles.less"
                         ],
-                        "scripts": [
-                            "src/assets/js/sweetalert.min.js"
-                        ]
+                        "scripts": []
                     },
                     "configurations": {
                         "production": {

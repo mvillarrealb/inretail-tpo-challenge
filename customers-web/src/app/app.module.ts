@@ -11,6 +11,7 @@ import { ClientsListComponent } from './clients/clients-list/clients-list.compon
 import { ClientsIndexComponent } from './clients/clients-index/clients-index.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ClientsProjectionComponent } from './clients/clients-projection/clients-projection.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -23,6 +24,7 @@ import { ClientsProjectionComponent } from './clients/clients-projection/clients
     imports: [
         BrowserModule,
         AppRoutingModule,
+        HttpClientModule,
         CoreModule
     ],
     providers: [ClientsService ],

@@ -1,55 +1,43 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
-import { Client } from '../interfaces/client';
-import { UpdateClientDto } from '../interfaces/update-client-dto';
+import { map, catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { Customer } from '../interfaces/client';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ClientsService {
-    constructor(private firestore: AngularFirestore) {}
+    endpoint = 'http://localhost:8080/';
+    headers = new HttpHeaders().set('Content-Type', 'application/json');
+    constructor(private http: HttpClient) {}
 
-    // crear cliente
-    create(data: Client) {
-        return this.firestore.collection('clients').add(data);
+    create(data: Customer) {
+        const apiUrl = `${this.endpoint}/customers`;
+        return this.http.post(apiUrl, data)
+          .pipe(
+            catchError(this.errorMgmt)
+          );
     }
 
-    // Obtiene un cliente
-    find(clientId: string) {
-        return this.firestore
-            .collection('clients')
-            .doc(clientId)
-            .snapshotChanges();
+    findKpis() {
+        const apiUrl = `${this.endpoint}/customers/kpis`;
+        return this.http.get(apiUrl);
     }
 
-    // Obtiene todos los cliente
-    all() {
-        return this.firestore
-            .collection('clients')
-            .snapshotChanges()
-            .map(actions => {
-                return actions.map(a => {
-                    const data = a.payload.doc.data();
-                    const id = a.payload.doc.id;
-                    return { id, ...data } as Client;
-                });
-            });
+    findAll() {
+        const apiUrl = `${this.endpoint}/customers`;
+        return this.http.get(apiUrl);
     }
 
-    // Actualiza un cliente
-    update(clientId: string, data: UpdateClientDto) {
-        return this.firestore
-            .collection('clients')
-            .doc(clientId)
-            .set(data);
-    }
-
-    // Actualiza un cliente
-    delete(clientId: string) {
-        return this.firestore
-            .collection('clients')
-            .doc(clientId)
-            .delete();
-    }
+    errorMgmt(error: HttpErrorResponse) {
+        let errorMessage = '';
+        if (error.error instanceof ErrorEvent) {
+          errorMessage = error.error.message;
+        } else {
+          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+        }
+        console.log(errorMessage);
+        return throwError(errorMessage);
+      }
 }

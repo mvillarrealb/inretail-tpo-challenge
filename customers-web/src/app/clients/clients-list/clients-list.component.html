@@ -13,10 +13,10 @@
             <tr *ngFor="let item of clientsList; let i = index">
                 <td class="align-middle">{{ item.name }}</td>
                 <td class="align-middle">{{ item.lastName }}</td>
-                <td class="align-middle">{{ item.years }}</td>
-                <td class="align-middle">{{ getRenderDate(item.birthdate) }}</td>
+                <td class="align-middle">{{ item.age }}</td>
+                <td class="align-middle">{{ renderDate(item.birthDate) }}</td>
                 <td class="align-middle">
-                    {{ getDeathDate(item.birthdate) }}
+                    {{ renderDate(item.probableDeathDate) }}
                 </td>
             </tr>
         </tbody>
