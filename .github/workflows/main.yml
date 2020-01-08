@@ -17,10 +17,13 @@ jobs:
        registry: gcr.io
        username: _json_key
        password: ${{ secrets.DOCKER_PASSWORD }}
-    - name: deploy to google kubernetes engine
+    - name: setup gcloud
+      id: gcloudsetup
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         service_account_key: ${{ secrets.GCLOUD_KEY }}
+    - name: deploy to google kubernetes engine
+      id: deploy
       run: |
         gcloud container clusters get-credentials inretail-tpo-challenge-cluster --zone us-central1-a --project inretail-tpo-challenge
         kubectl get deploy customers-api -n apps || kubectl apply -f ./customers-api/deploy -n apps
