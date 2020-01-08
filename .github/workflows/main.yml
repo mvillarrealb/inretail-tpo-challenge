@@ -6,6 +6,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Build application Jar
+      id: build
       working-directory: ./customers-api
       run: ./mvnw clean package
     - name: Login to gcloud registry
@@ -15,8 +16,6 @@ jobs:
         account_key: ${{ secrets.GCLOUD_KEY }}
       env:
         GCLOUD_AUTH: ${{ secrets.GCLOUD_KEY }}
-    - name: Set project dir environment var
-      run: echo ::set-env name=PROJECT_DIR::"$GITHUB_WORKSPACE/customers-api"
     - name: Build & publish image
       uses: mr-smithers-excellent/docker-build-push@v1.0
       with:
