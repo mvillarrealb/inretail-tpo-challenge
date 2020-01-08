@@ -22,4 +22,4 @@ jobs:
        registry: gcr.io
        dockerfile: ./customers-api/Dockerfile
        username: _json_key
-       password: ${{ secrets.GCLOUD_KEY }} 
+       password: ${{ secrets.DOCKER_PASSWORD }} 
