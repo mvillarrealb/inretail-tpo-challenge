@@ -15,13 +15,11 @@ jobs:
         account_key: ${{ secrets.GCLOUD_KEY }}
       env:
         GCLOUD_AUTH: ${{ secrets.GCLOUD_KEY }}
-    - name: Create and push image
-      if: success()
-      uses: manusa/actions-publish-docker@master
-      working-directory: ./customers-api
+    - name: Build & publish image
+      uses: mr-smithers-excellent/docker-build-push@v1.0
       with:
-        name: inretail-tpo-challenge/customers-api
-        tag: ${{ github.sha }}
-        username: ${{ steps.gcloud.outputs.username }}
-        password: ${{ steps.gcloud.outputs.password }}
-        registry: gcr.io
+       image: inretail-tpo-challenge/customers-api
+       registry: gcr.io
+       dockerfile: ./customers-api/Dockerfile
+       username: _json_key
+       password: ${{ secrets.GCLOUD_KEY }} 
