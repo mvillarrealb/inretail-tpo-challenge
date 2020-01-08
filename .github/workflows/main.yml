@@ -21,6 +21,5 @@ jobs:
       with:
        image: inretail-tpo-challenge/customers-api
        registry: gcr.io
-       dockerfile: ./customers-api/Dockerfile
        username: _json_key
        password: ${{ secrets.DOCKER_PASSWORD }} 
