@@ -27,4 +27,4 @@ jobs:
       run: |
         gcloud container clusters get-credentials inretail-tpo-challenge-cluster --zone us-central1-a --project inretail-tpo-challenge
         kubectl get deploy customers-api -n apps || kubectl apply -f ./customers-api/deploy -n apps
-        kubectl set image deploy/gcr.io/inretail-tpo-challenge/customers-api:${{ github.sha }} -n apps
+        kubectl set image deploy/customers-api customers-api=gcr.io/inretail-tpo-challenge/customers-api:${{ github.sha }} -n apps
