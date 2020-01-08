@@ -16,10 +16,16 @@ jobs:
         account_key: ${{ secrets.GCLOUD_KEY }}
       env:
         GCLOUD_AUTH: ${{ secrets.GCLOUD_KEY }}
-    - name: Build & publish image
+    - name: build & publish image
       uses: mr-smithers-excellent/docker-build-push@v1.0
       with:
        image: inretail-tpo-challenge/customers-api
        registry: gcr.io
        username: _json_key
-       password: ${{ secrets.DOCKER_PASSWORD }} 
+       password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: deploy to google kubernetes engine
+      uses: steebchen/kubectl@master
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      with:
+        args: apply -f ./customers-api/deploy -n apps

@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
       - name: customers-api
-        image: gcr.io/pe-intercorpretail-cld-01/customers-api:1.0.0
+        image: gcr.io/inretail-tpo-challenge/customers-api:latest
+        imagePullPolicy: Always
         volumeMounts:
           - name: config-volume
             mountPath: /app/application.properties
