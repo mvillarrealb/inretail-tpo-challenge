@@ -3,6 +3,12 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PROJECT_ID: mvillarreal-tpo-challenge
+      CLUSTER_ID: inretail-tpo-challenge-cluster
+      ZONE: us-central1-a
+      REGISTRY: mvillarreal-tpo-challenge/customers-api
+      DEPLOY: customers-api
     steps:
     - uses: actions/checkout@master
     - name: Build application Jar
@@ -12,7 +18,7 @@ jobs:
     - name: build & publish image
       uses: mr-smithers-excellent/docker-build-push@v1.0
       with:
-       image: inretail-tpo-challenge/customers-api
+       image: ${{ REGISTRY }}
        tag: ${{ github.sha }}
        registry: gcr.io
        username: _json_key
@@ -25,6 +31,7 @@ jobs:
     - name: deploy to google kubernetes engine
       id: deploy
       run: |
-        gcloud container clusters get-credentials inretail-tpo-challenge-cluster --zone us-central1-a --project inretail-tpo-challenge
-        kubectl get deploy customers-api -n apps || kubectl apply -f ./customers-api/deploy -n apps
-        kubectl set image deploy/customers-api customers-api=gcr.io/inretail-tpo-challenge/customers-api:${{ github.sha }} -n apps
+        gcloud container clusters get-credentials $CLUSTER_ID --zone $ZONE --project ${{ PROJECT_ID }}
+        kubectl get namespace apps || kubectl create namespace apps
+        kubectl get deploy ${{ DEPLOY }} -n apps || kubectl apply -f ./customers-api/deploy -n apps
+        kubectl set image deploy/${{ DEPLOY }} ${{ DEPLOY }}=gcr.io/${{ REGISTRY }}}:${{ github.sha }} -n apps

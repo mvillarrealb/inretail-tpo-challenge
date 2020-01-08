@@ -18,10 +18,7 @@ resource "google_container_cluster" "primary" {
 
   node_config {
     machine_type = "n1-standard-1"
-    oauth_scopes = [
-      "https://www.googleapis.com/auth/logging.write",
-      "https://www.googleapis.com/auth/monitoring",
-    ]
+    #service_account = "inretail-tpo-saccount@inretail-tpo-challenge.iam.gserviceaccount.com"
 
     metadata = {
       disable-legacy-endpoints = "true"
