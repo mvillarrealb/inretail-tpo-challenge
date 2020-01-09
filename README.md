@@ -54,6 +54,13 @@ terraform plan
 #Que comience la fiesta!
 terraform apply
 
+
+kubectl create secret docker-registry gcr-json-key \
+--docker-server=gcr.io \
+--docker-username=_json_key \
+--docker-password="$(cat $(pwd)/platform/service-account-key.json)" \
+--docker-email=erick.slayer.m.v@gmail.com \
+-n apps
 ```
 ## Documentación Open Api
 

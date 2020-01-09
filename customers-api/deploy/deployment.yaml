@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: customers-api
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: customers-api
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: customers-api
-        image: gcr.io/inretail-tpo-challenge/customers-api:latest
+        image: gcr.io/mvillarreal-tpo-challenge/customers-api:8865b4dc087e902e6d9cf447bbf0b052c666d9e7
         imagePullPolicy: Always
         volumeMounts:
           - name: config-volume
@@ -24,10 +24,13 @@ spec:
         env:
           - name: JAVA_OPTS
             value: -Dmicronaut.config.files=file:/app/application.properties
-        envFrom:
-          - secretRef: 
-              name: customers-api-secret
+        ports:
+          - containerPort:  8080
+            name: api-port
+            protocol: TCP
       volumes:
         - name: config-volume
           configMap:
             name: customers-api
+      imagePullSecrets:
+      - name: gcr-json-key
