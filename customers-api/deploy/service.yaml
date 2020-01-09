@@ -9,8 +9,9 @@ spec:
   selector:
     app: customers-api
   type: LoadBalancer
-  loadBalancerIP: "35.188.72.154"
+  loadBalancerIP: 35.188.72.154
   ports:
   - name: customers-api-port
     port:  8080
     targetPort: 8080
+    protocol: TCP

@@ -1,0 +1,93 @@
+{
+	"info": {
+		"_postman_id": "e0619f8b-23ff-4ffa-8456-8e1f8fc6c58c",
+		"name": "customer-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "listCustomers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://35.188.72.154:8080/customers",
+					"protocol": "http",
+					"host": [
+						"35",
+						"188",
+						"72",
+						"154"
+					],
+					"port": "8080",
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "customerKpis",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://35.188.72.154:8080/customers/kpis",
+					"protocol": "http",
+					"host": [
+						"35",
+						"188",
+						"72",
+						"154"
+					],
+					"port": "8080",
+					"path": [
+						"customers",
+						"kpis"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createCustomer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Marco\",\n\t\"lastName\": \"Villarreal\",\n\t\"birthDate\": \"1989-09-11\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://35.188.72.154:8080/customers",
+					"protocol": "http",
+					"host": [
+						"35",
+						"188",
+						"72",
+						"154"
+					],
+					"port": "8080",
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

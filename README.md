@@ -6,10 +6,10 @@
 
 Componente| Descripción|Tecnología
 ---|---|---
-customers-api| |Spring Boot
-customers-web| |Angular
-customers-openapi| |Open api 3
-platform| |Terraform & GCP
+customers-api| Api de clientes|Spring Boot
+customers-web| Front end de clientes|Angular
+customers-openapi| Documentación swagger|Open api 3
+platform| Plataforma |Terraform & GCP
 
 # Instalación
 
@@ -45,6 +45,7 @@ gcloud iam service-accounts keys create $(pwd)/platform/service-account-key.json
   --iam-account inretail-tpo-saccount@mvillarreal-tpo-challenge.iam.gserviceaccount.com
 
 
+
 #Init terraform plugins
 terraform init
 
@@ -54,7 +55,7 @@ terraform plan
 #Que comience la fiesta!
 terraform apply
 
-
+# Crear el secret para los deploy tengan permiso de hacer pull al registry gcr.io
 kubectl create secret docker-registry gcr-json-key \
 --docker-server=gcr.io \
 --docker-username=_json_key \
@@ -62,28 +63,19 @@ kubectl create secret docker-registry gcr-json-key \
 --docker-email=erick.slayer.m.v@gmail.com \
 -n apps
 ```
-## Documentación Open Api
 
-```sh
-kubectl apply -f customers-openapi/deploy -n demo
-```
 ## Microservicio customer-api
 
-### Despliegue automatizado
-
-### Despliegue Manual
-```sh
-cd customers-api & ./mvnw clean package
-
-docker build -t micro-service-demo:1.0.0 .
-
-docker tag gcr.io//micro-service-demo:1.0.0
-
-docker push
-
-kubectl apply -f customers-api/deploy -n apps
-```
+Se despliega usando el job en el directorio .github
 
 ## Frontend App
 
-# Testing
+Se despliega usando firebase cli
+
+## Test de la Api
+
+```sh
+npm install -g newman
+cd ./customers-api && newman run customer-api.postman_collection.json
+
+```

@@ -1,5 +1,8 @@
 name: customers-api:CI/CD
-on: [push]
+on:
+  push:
+    branches:
+    - master
 env:
   PROJECT_ID: mvillarreal-tpo-challenge
   CLUSTER_ID: inretail-tpo-challenge-cluster
