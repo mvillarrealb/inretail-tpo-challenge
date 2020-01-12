@@ -19,19 +19,19 @@ public class CustomerController {
 
 
     @RequestMapping(value = "/customers",method = RequestMethod.GET)
-    List<CustomerDTO> listCustomers(
+    public List<CustomerDTO> listCustomers(
             @RequestParam(required = false) Optional<Integer> limit,
             @RequestParam(required = false) Optional<Integer> offset) {
         return customerService.listCustomers(limit.orElse(10), offset.orElse(0));
     }
 
     @RequestMapping(value="/customers", method = RequestMethod.POST)
-    CustomerDTO createCustomer(@Valid @RequestBody CustomerDTO customerDTO) {
+    public CustomerDTO createCustomer(@Valid @RequestBody CustomerDTO customerDTO) {
         return customerService.createCustomer(customerDTO);
     }
 
     @RequestMapping(value = "/customers/kpis",method = RequestMethod.GET)
-    CustomerKpi getCustomerKpi() {
+    public CustomerKpi getCustomerKpi() {
         return customerService.getCustomerKpi();
     }
 

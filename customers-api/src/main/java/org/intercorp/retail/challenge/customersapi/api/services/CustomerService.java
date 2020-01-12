@@ -25,7 +25,7 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public List<CustomerDTO> listCustomers(int limit, int offset) {
-        Pageable pageable = PageRequest.of(0, limit);
+        Pageable pageable = PageRequest.of(offset, limit);
         return customerRepository.findAll(pageable)
                 .stream()
                 .map(CustomerDTO::toCustomerDTO)

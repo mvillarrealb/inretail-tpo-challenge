@@ -1,14 +1,16 @@
+# Ip estática global
 resource "google_compute_global_address" "tpo_address" {
   name = "inretail-tpo-challenge-ip"
-  description="I"
 }
-# Creación de la red privada
+
+# VPC privada
 resource "google_compute_network" "private_network" {
   provider = google-beta
   name = "private-network"
+  routing_mode= "REGIONAL"
 }
 
-# Creación de ips privadas
+# Creación de ip privadas
 resource "google_compute_global_address" "private_ip_address" {
   provider = google-beta
   name          = "private-ip-address"
@@ -18,7 +20,6 @@ resource "google_compute_global_address" "private_ip_address" {
   network       = google_compute_network.private_network.self_link
 }
 
-# Creación de conección vpc(REVISAR PORFIS)
 resource "google_service_networking_connection" "private_vpc_connection" {
   provider = google-beta
   network                 = google_compute_network.private_network.self_link
@@ -27,19 +28,24 @@ resource "google_service_networking_connection" "private_vpc_connection" {
 }
 
 # Instancia de cloud sql
-resource "google_sql_database_instance" "pg_cloud_sql" {
-  name             = "pg-cloud-sql"
-  database_version = "POSTGRES_11"
-  region           = "us-central1"
+resource "google_sql_database_instance" "mysql_cloud_sql" {
+  provider = google-beta
+  name             = "inretail-tpo-challenge-database"
   depends_on = [google_service_networking_connection.private_vpc_connection]
   settings {
     tier = "db-f1-micro"
-      ip_configuration {
+    user_labels = {
+      app = "inretail-tpo-challenge"
+      environment="test"
+      tier = "database"
+    }
+    ip_configuration {
       ipv4_enabled    = false
       private_network = google_compute_network.private_network.self_link
     }
   }
 }
+
 # Cluster de kubernetes
 resource "google_container_cluster" "primary" {
   name               = "inretail-tpo-challenge-cluster"
@@ -73,6 +79,7 @@ resource "google_container_cluster" "primary" {
     labels = {
       app = "inretail-tpo-challenge"
       environment="test"
+      tier="container-runtime"
     }
 
     tags = ["dev", "qa", "prod", "mvillarreal", "inretail"]
@@ -84,11 +91,13 @@ resource "google_container_cluster" "primary" {
   }
 }
 
+# Zona de DNS
 resource "google_dns_managed_zone" "challenge" {
   name     = "challenge-zone"
   dns_name = "challenge.mvillarreal.com."
 }
 
+# Registro A de DNS
 resource "google_dns_record_set" "a_record" {
   name         = "backend.${google_dns_managed_zone.challenge.dns_name}"
   managed_zone = google_dns_managed_zone.challenge.name
@@ -98,6 +107,7 @@ resource "google_dns_record_set" "a_record" {
   rrdatas = ["${google_compute_global_address.tpo_address.address}"]
 }
 
+# Registro CNAME de DNS
 resource "google_dns_record_set" "cname_record" {
   name         = "frontend.${google_dns_managed_zone.challenge.dns_name}"
   managed_zone = google_dns_managed_zone.challenge.name
