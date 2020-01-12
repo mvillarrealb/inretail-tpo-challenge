@@ -4,6 +4,7 @@ import org.intercorp.retail.challenge.customersapi.api.dtos.CustomerDTO;
 import org.intercorp.retail.challenge.customersapi.api.services.CustomerService;
 import org.intercorp.retail.challenge.customersapi.domain.models.CustomerKpi;
 import org.springframework.beans.factory.annotation.Autowired;;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,7 +25,7 @@ public class CustomerController {
             @RequestParam(required = false) Optional<Integer> offset) {
         return customerService.listCustomers(limit.orElse(10), offset.orElse(0));
     }
-
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value="/customers", method = RequestMethod.POST)
     public CustomerDTO createCustomer(@Valid @RequestBody CustomerDTO customerDTO) {
         return customerService.createCustomer(customerDTO);

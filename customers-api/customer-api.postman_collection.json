@@ -6,52 +6,23 @@
 	},
 	"item": [
 		{
-			"name": "listCustomers",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://35.188.72.154:8080/customers",
-					"protocol": "http",
-					"host": [
-						"35",
-						"188",
-						"72",
-						"154"
-					],
-					"port": "8080",
-					"path": [
-						"customers"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "customerKpis",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://35.188.72.154:8080/customers/kpis",
-					"protocol": "http",
-					"host": [
-						"35",
-						"188",
-						"72",
-						"154"
-					],
-					"port": "8080",
-					"path": [
-						"customers",
-						"kpis"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "createCustomer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fadda7b0-4734-4287-947b-efc5124942a7",
+						"exec": [
+							"pm.test(\"should return status 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -72,21 +43,167 @@
 					}
 				},
 				"url": {
-					"raw": "http://35.188.72.154:8080/customers",
-					"protocol": "http",
+					"raw": "{{ENVIRONMENT}}/customers",
 					"host": [
-						"35",
-						"188",
-						"72",
-						"154"
+						"{{ENVIRONMENT}}"
 					],
-					"port": "8080",
 					"path": [
 						"customers"
 					]
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "createCustomerValidation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fadda7b0-4734-4287-947b-efc5124942a7",
+						"exec": [
+							"pm.test(\"should return status 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ENVIRONMENT}}/customers",
+					"host": [
+						"{{ENVIRONMENT}}"
+					],
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listCustomers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8bb7be0f-8366-4886-b202-56382ea3fc6c",
+						"exec": [
+							"pm.test(\"should return status 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ENVIRONMENT}}/customers",
+					"host": [
+						"{{ENVIRONMENT}}"
+					],
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "customerKpis",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "27acc672-887f-426e-bf7b-1451b986931c",
+						"exec": [
+							"pm.test(\"should return status 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ENVIRONMENT}}customers/kpis",
+					"host": [
+						"{{ENVIRONMENT}}customers"
+					],
+					"path": [
+						"kpis"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "016ce262-d1d1-47a4-a468-df4d9c64bcc7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "7eda9fa8-e32d-4a11-99a1-b1545739b74c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "c85b4546-2aa1-4d40-abd5-73d188fb67f2",
+			"key": "DEV",
+			"value": "http://localhost:8080/",
+			"type": "string"
+		},
+		{
+			"id": "bbacd8fa-6d2a-4416-b216-4919eca4a08a",
+			"key": "CLOUD",
+			"value": "https://api.mvillarreal.com/",
+			"type": "string"
 		}
 	],
 	"protocolProfileBehavior": {}

@@ -23,7 +23,7 @@ spec:
             subPath: application.properties
         env:
           - name: JAVA_OPTS
-            value: -Dmicronaut.config.files=file:/app/application.properties
+            value: -Dspring.config.name=file:/app/application.properties
         ports:
           - containerPort:  8080
             name: api-port
