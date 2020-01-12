@@ -1,3 +1,16 @@
+provider "google" {
+  credentials = "${file("service-account-key.json")}"
+  project     = "${var.gcp_project}"
+  region      = "${var.gcp_region}"
+}
+
+provider "google-beta" {
+  credentials = "${file("service-account-key.json")}"
+  project     = "${var.gcp_project}"
+  region      = "${var.gcp_region}"
+}
+
+
 # Ip estática global
 resource "google_compute_global_address" "tpo_address" {
   name = "inretail-tpo-challenge-ip"
@@ -5,14 +18,14 @@ resource "google_compute_global_address" "tpo_address" {
 
 # VPC privada
 resource "google_compute_network" "private_network" {
-  provider = google-beta
-  name = "private-network"
-  routing_mode= "REGIONAL"
+  provider     = "google-beta"
+  name         = "private-network"
+  routing_mode = "REGIONAL"
 }
 
 # Creación de ip privadas
 resource "google_compute_global_address" "private_ip_address" {
-  provider = google-beta
+  provider      = "google-beta"
   name          = "private-ip-address"
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
@@ -29,9 +42,10 @@ resource "google_service_networking_connection" "private_vpc_connection" {
 
 # Instancia de cloud sql
 resource "google_sql_database_instance" "mysql_cloud_sql" {
-  provider = google-beta
-  name             = "inretail-tpo-challenge-database"
-  depends_on = [google_service_networking_connection.private_vpc_connection]
+  provider    = google-beta
+  name        = "inretail-tpo-challenge-database"
+  depends_on  = [google_service_networking_connection.private_vpc_connection]
+  
   settings {
     tier = "db-f1-micro"
     user_labels = {
@@ -39,6 +53,7 @@ resource "google_sql_database_instance" "mysql_cloud_sql" {
       environment="test"
       tier = "database"
     }
+
     ip_configuration {
       ipv4_enabled    = false
       private_network = google_compute_network.private_network.self_link
@@ -47,9 +62,9 @@ resource "google_sql_database_instance" "mysql_cloud_sql" {
 }
 
 # Cluster de kubernetes
-resource "google_container_cluster" "primary" {
+resource "google_container_cluster" "container_cluster" {
   name               = "inretail-tpo-challenge-cluster"
-  location           = "us-central1-a"
+  location           = "${var.gcp_zone}"
   initial_node_count = 2
 
   master_auth {
@@ -65,7 +80,7 @@ resource "google_container_cluster" "primary" {
   logging_service = "logging.googleapis.com/kubernetes"
 
   node_config {
-    machine_type = "n1-standard-1"
+    machine_type = "${var.gke_machine_type}"
     
     oauth_scopes = [
       "https://www.googleapis.com/auth/devstorage.read_only",
@@ -92,15 +107,15 @@ resource "google_container_cluster" "primary" {
 }
 
 # Zona de DNS
-resource "google_dns_managed_zone" "challenge" {
-  name     = "challenge-zone"
+resource "google_dns_managed_zone" "dns_zone" {
+  name     = "inretail-tpo-challenge-zone"
   dns_name = "challenge.mvillarreal.com."
 }
 
 # Registro A de DNS
 resource "google_dns_record_set" "a_record" {
-  name         = "backend.${google_dns_managed_zone.challenge.dns_name}"
-  managed_zone = google_dns_managed_zone.challenge.name
+  name         = "backend.${google_dns_managed_zone.dns_zone.dns_name}"
+  managed_zone = google_dns_managed_zone.dns_zone.name
   type         = "A"
   ttl          = 300
   
@@ -109,8 +124,8 @@ resource "google_dns_record_set" "a_record" {
 
 # Registro CNAME de DNS
 resource "google_dns_record_set" "cname_record" {
-  name         = "frontend.${google_dns_managed_zone.challenge.dns_name}"
-  managed_zone = google_dns_managed_zone.challenge.name
+  name         = "frontend.${google_dns_managed_zone.dns_zone.dns_name}"
+  managed_zone = google_dns_managed_zone.dns_zone.name
   type         = "CNAME"
   ttl          = 300
   rrdatas      = ["api.mvillarreal.com."]
