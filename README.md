@@ -1,10 +1,24 @@
-# Intercorp retail TPO CHALLENGE
+<h1> Intercorp retail TPO CHALLENGE</h1>
 ### 
 Reto técnico full stack Intercorp retail **Marco A Villarreal B**
 
 ![alt text](https://github.com/mvillarrealb/inretail-tpo-challenge/workflows/customers-api:CI/CD/badge.svg?branch=dev)
 
-# Componentes
+<h2>Contenidos</h2>
+
+* [Componentes](#components)
+* [Plataforma GCP](#cloud)
+* [Instalación](#installation)
+  * [Aprovisionamiento con Terraform](#terraform)
+  * [Configuraciones de Kubernetes](#kubernetes)
+  * [Ajustes del cert manager](#certmanager)
+  * [Configuración de la base de datos](#database)
+* [Microservicio customer-api](#api)
+* [Frontend App](#web)
+* [Test de la Api](#test)
+* [Roadmap](#roadmap)
+
+<h2 id = "components> Componentes</h2>
 
 Componente| Descripción|Tecnología
 ---|---|---
@@ -13,7 +27,7 @@ customers-web| Front end de clientes|Angular
 customers-openapi| Documentación swagger|Open api 3
 platform| Plataforma |Terraform & GCP
 
-# Plataforma GCP
+<h2 id="cloud"> Plataforma GCP</h2>
 
 A continuación se ilustra la plataforma de GCP desplegada para el reto
 
@@ -29,9 +43,9 @@ La plataforma GCP consiste de los siguientes componentes:
 * Instancia Cloud SQL
 * Container Registry de Google GKE
 
-# Instalación
+<h2 id ="installation">Instalación</h2>
 
-## Aprovisionamiento con Terraform
+<h3 id="terraform">Aprovisionamiento con Terraform</h3>
 
 
 A continuación se describen los pasos para instalar la plataforma GCP con terraform
@@ -94,10 +108,18 @@ terraform plan
 terraform apply
 ```
 
-## Configuraciones de Kubernetes
-```sh
+<h3 id="kubernetes">Configuraciones de Kubernetes</h3>
 
-# Luego
+### Requerimientos
+
+* kubectl
+* Kubeconfig apuntando a nuestro cluster
+
+```sh
+# Configura el acceso al cluster a través de kubectl
+gcloud container clusters get-credentials inretail-tpo-challenge-cluster --zone us-central1-a --project mvillarreal-tpo-challenge
+
+
 # Crea el namespace de aplicaciones
 kubectl create namespace apps
 
@@ -109,7 +131,7 @@ kubectl create secret docker-registry gcr-json-key \
 --docker-email=erick.slayer.m.v@gmail.com \
 -n apps
 ```
-## Ajustes del cert manager
+<h3 id="certmanager">Ajustes del cert manager</h3>
 
 A continuación de describen los pasos para configurar el cert-manager
 de kubernetes configurado para el issuer del let's encrypt
@@ -143,11 +165,24 @@ export EMAIL=erick.slayer.m.v@gmail.com
 
 # Creación del cert issuer de letsencrypt
 curl -sSL https://rawgit.com/ahmetb/gke-letsencrypt/master/yaml/letsencrypt-issuer.yaml | \
-    sed -e "s/email: ''/email: $EMAIL/g" | \
-    kubectl apply -f-
+sed -e "s/email: ''/email: $EMAIL/g" | \
+kubectl apply -f-
 ```
 
-## Microservicio customer-api
+<h3 id="database">Configuración de la base de datos</h3>
+
+```sh
+# Listar las instancias
+gcloud sql instances list
+
+NAME                             DATABASE_VERSION  LOCATION       TIER         PRIMARY_ADDRESS  PRIVATE_ADDRESS  STATUS
+inretail-tpo-challenge-database  MYSQL_5_6         us-central1-a  db-f1-micro  -                10.35.0.3    
+
+kubectl apply -f ./platform/kubernetes/database -n apps
+```
+
+
+<h2 id="api">Microservicio customer-api</h2>
 
 Se despliega usando el pipeline en el directorio .github, en el diagrama se observan las etapas del pipeline
 
@@ -161,7 +196,7 @@ Se despliega usando el pipeline en el directorio .github, en el diagrama se obse
 
 * NEWMAN TESTS una vez desplegados los cambios se usa newman para correr un test funcional básico.
 
-# Frontend App
+<h2 id="web">Frontend App</h2>
 
 Se despliega usando firebase cli usando el comando
 
@@ -169,7 +204,7 @@ Se despliega usando firebase cli usando el comando
 firebase deploy
 ```
 
-## Test de la Api
+<h2 id="test">Test de la Api</h2>
 
 Para probar la api rest de customers puede usar la colección de postman del directorio customers-api e invocarla usando newman como se muestra:
 
@@ -179,7 +214,7 @@ cd ./customers-api && newman run customer-api.postman_collection.json
 
 ```
 
-## ROADMAP
+<h2 id="roadmap">ROADMAP</h2>
 
 * Agregar sonar cloud en el pipeline (Necesito pagar porque ahorita esta privado mi repo XD )
 

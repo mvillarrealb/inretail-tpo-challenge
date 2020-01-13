@@ -15,4 +15,4 @@ spec:
   tls:
   - secretName: customers-api-secret
     hosts:
-    - www.api.mvillarreal.com
+    - api.mvillarreal.com

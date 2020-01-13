@@ -10,4 +10,4 @@ data:
     spring.jpa.hibernate.ddl-auto=update
     spring.datasource.url=jdbc:mysql://cloud-sql-dev:3306/customers
     spring.datasource.username=${MYSQL_USERNAME:root}
-    spring.datasource.password=${MYSQL_PASSWORD:pwd}
+    spring.datasource.password=${MYSQL_PASSWORD:casa1234}

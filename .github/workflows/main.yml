@@ -35,6 +35,5 @@ jobs:
       id: deploy
       run: |
         gcloud container clusters get-credentials $CLUSTER_ID --zone $ZONE --project $PROJECT_ID 
-        kubectl get namespace apps || kubectl create namespace apps
         kubectl get deploy $DEPLOY  -n apps || kubectl apply -f ./customers-api/deploy -n apps
         kubectl set image deploy/$DEPLOY  $DEPLOY=gcr.io/$REGISTRY:${{ github.sha }}  -n apps

@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  cloud-sql-dev
+  labels:
+    app: cloud-sql-dev
+    tier: database
+spec:
+  selector:
+    app:  customer-api
+    tier: database
+  type:  ClusterIP
+  ports:
+  - name:  database-port
+    port:  3306
+    targetPort:  3306

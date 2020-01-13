@@ -109,7 +109,7 @@ resource "google_container_cluster" "container_cluster" {
 # Zona de DNS
 resource "google_dns_managed_zone" "dns_zone" {
   name     = "inretail-tpo-challenge-zone"
-  dns_name = "challenge.mvillarreal.com."
+  dns_name = "mvillarreal.com."
 }
 
 # Registro A de DNS
