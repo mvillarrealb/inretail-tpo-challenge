@@ -156,9 +156,17 @@ helm init --service-account tiller
 # Actualización de repos de helm
 helm repo update
 
+kubectl apply --validate=false\
+    -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.12/deploy/manifests/00-crds.yaml
+
+helm repo add jetstack https://charts.jetstack.io
+
 # Instalación del cert-manager
-helm install --name cert-manager --version v0.5.2 \
---namespace kube-system stable/cert-manager
+helm install --name cert-manager \
+--set='podDnsPolicy=None' \
+--set='podDnsConfig.nameservers[0]=1.1.1.1' \
+--set='podDnsConfig.nameservers[0]=8.8.8.8' \
+--namespace kube-system jetstack/cert-manager
 
 
 export EMAIL=erick.slayer.m.v@gmail.com

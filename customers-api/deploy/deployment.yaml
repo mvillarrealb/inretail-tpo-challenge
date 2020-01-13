@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: customers-api
-        image: gcr.io/mvillarreal-tpo-challenge/customers-api:8865b4dc087e902e6d9cf447bbf0b052c666d9e7
+        image: gcr.io/mvillarreal-tpo-challenge/customers-api:935074b09b8a68052934fee9f4cd30c6ae978319
         imagePullPolicy: Always
         volumeMounts:
           - name: config-volume
