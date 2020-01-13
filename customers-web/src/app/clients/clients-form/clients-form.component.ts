@@ -38,7 +38,7 @@ export class ClientsFormComponent implements OnInit {
         if (this.form.valid) {
             const values = this.form.value;
             values.birthDate = moment(values.birthDate).format('YYYY-MM-DD');
-            this.clientsService.create(values).toPromise().then(() => {
+            this.clientsService.create(values).then(() => {
                 /**
                  * Success
                  */

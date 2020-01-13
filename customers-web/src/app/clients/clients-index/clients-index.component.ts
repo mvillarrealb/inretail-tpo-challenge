@@ -17,7 +17,9 @@ export class ClientsIndexComponent implements OnInit {
         ) {}
 
     ngOnInit() {
-        this.clientService.findKpis().subscribe((res: CustomerKpi) => {
+        console.log("GUEBO PELAO")
+        this.clientService.findKpis().then((res: CustomerKpi) => {
+            console.log(res);
             this.customerKpi = res;
         });
     }

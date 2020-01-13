@@ -2,12 +2,12 @@ export const environment = {
     production: false,
     apiUrl: 'http://localhost:8080',
     firebaseconfig: {
-        apiKey: 'AIzaSyDELDlhnezBO1dJtt8EVxwL0YN0C05Ji7Y',
-        authDomain: 'web-application-challeng-28802.firebaseapp.com',
-        databaseURL: 'https://web-application-challeng-28802.firebaseio.com',
-        projectId: 'web-application-challeng-28802',
-        storageBucket: 'web-application-challeng-28802.appspot.com',
-        messagingSenderId: '156886613129',
-        appId: '1:156886613129:web:57b3180dc4ae8f97'
+        apiKey: 'AIzaSyCdbs_kRF8Li2A1vNd4FtiM9GCb8ayWsm4',
+        authDomain: 'mvillarreal-tpo-challenge.firebaseapp.com',
+        databaseURL: 'https://mvillarreal-tpo-challenge.firebaseio.com',
+        projectId: 'mvillarreal-tpo-challenge',
+        storageBucket: 'mvillarreal-tpo-challenge.appspot.com',
+        messagingSenderId: '879132456104',
+        appId: '1:879132456104:web:ef818b0ae3bab59b0ffe9d'
     }
 };

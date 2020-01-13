@@ -6,4 +6,5 @@ export interface Customer {
     lastName: string;
     age: number;
     birthDate: string;
+    probableDeathDate: string;
 }
