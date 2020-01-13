@@ -2,5 +2,8 @@ node_modules/*
 .idea/*
 .mvn/*
 .terraform
-.tfstate*
-/*.backup
+*.tfstate
+*.tfstate.*
+*/*.tfstate
+*/*.tfstate.backup
+*/service-account-key.json

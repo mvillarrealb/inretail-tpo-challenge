@@ -8,8 +8,9 @@ metadata:
 spec:
   selector:
     app: customers-api
-  type:  ClusterIP
+  type: NodePort
   ports:
   - name: customers-api-port
     port:  8080
-    targetPort:  8080
+    targetPort: 8080
+    protocol: TCP

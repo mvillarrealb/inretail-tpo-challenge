@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: customers-api
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: inretail-tpo-challenge-ip
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    certmanager.k8s.io/acme-http01-edit-in-place: "true"
+  labels:
+    app: customers-api
+spec:
+  backend:
+    serviceName: customers-api
+    servicePort: 8080
+  tls:
+  - secretName: customers-api-secret
+    hosts:
+    - api.mvillarreal.com

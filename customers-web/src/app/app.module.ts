@@ -1,7 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-
 import { AppComponent } from './app.component';
 
 import { CoreModule } from './core/core.module';
@@ -12,6 +10,7 @@ import { ClientsIndexComponent } from './clients/clients-index/clients-index.com
 import { AppRoutingModule } from './app-routing.module';
 import { ClientsProjectionComponent } from './clients/clients-projection/clients-projection.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -23,6 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
     ],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         AppRoutingModule,
         HttpClientModule,
         CoreModule

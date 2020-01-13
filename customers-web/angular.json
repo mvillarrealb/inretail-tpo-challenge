@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "web-application-challenge": {
+        "customers-web": {
             "root": "",
             "sourceRoot": "src",
             "projectType": "application",
@@ -17,7 +17,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/web-application-challenge",
+                        "outputPath": "dist/customers-web",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -54,18 +54,18 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "web-application-challenge:build"
+                        "browserTarget": "customers-web:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "web-application-challenge:build:production"
+                            "browserTarget": "customers-web:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "web-application-challenge:build"
+                        "browserTarget": "customers-web:build"
                     }
                 },
                 "test": {
@@ -99,7 +99,7 @@
                 }
             }
         },
-        "web-application-challenge-e2e": {
+        "customers-web-e2e": {
             "root": "e2e/",
             "projectType": "application",
             "architect": {
@@ -107,11 +107,11 @@
                     "builder": "@angular-devkit/build-angular:protractor",
                     "options": {
                         "protractorConfig": "e2e/protractor.conf.js",
-                        "devServerTarget": "web-application-challenge:serve"
+                        "devServerTarget": "customers-web:serve"
                     },
                     "configurations": {
                         "production": {
-                            "devServerTarget": "web-application-challenge:serve:production"
+                            "devServerTarget": "customers-web:serve:production"
                         }
                     }
                 },
@@ -127,7 +127,7 @@
             }
         }
     },
-    "defaultProject": "web-application-challenge",
+    "defaultProject": "customers-web",
     "schematics": {
         "@schematics/angular:component": {
             "styleext": "less"
