@@ -158,11 +158,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{ENVIRONMENT}}customers/kpis",
+					"raw": "{{ENVIRONMENT}}/customers/kpis",
 					"host": [
-						"{{ENVIRONMENT}}customers"
+						"{{ENVIRONMENT}}"
 					],
 					"path": [
+						"customers",
 						"kpis"
 					]
 				}
@@ -194,15 +195,21 @@
 	],
 	"variable": [
 		{
-			"id": "c85b4546-2aa1-4d40-abd5-73d188fb67f2",
+			"id": "79462961-0d81-4e66-9905-92013f858552",
 			"key": "DEV",
 			"value": "http://localhost:8080/",
 			"type": "string"
 		},
 		{
-			"id": "bbacd8fa-6d2a-4416-b216-4919eca4a08a",
+			"id": "909b96bb-8de5-4c2b-be6e-c19c61a02dbf",
 			"key": "CLOUD",
 			"value": "https://api.mvillarreal.com/",
+			"type": "string"
+		},
+		{
+			"id": "ef9ef673-5af0-4352-bb6d-9230d870b6ae",
+			"key": "ENVIRONMENT",
+			"value": "http://34.107.190.34",
 			"type": "string"
 		}
 	],

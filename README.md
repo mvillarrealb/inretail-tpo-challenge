@@ -218,7 +218,7 @@ Para probar la api rest de customers puede usar la colección de postman del dir
 
 ```sh
 npm install -g newman
-cd ./customers-api && newman run customer-api.postman_collection.json
+cd ./customers-api &&  newman run customer-api.postman_collection.json --env-var ENVIRONMENT=http://api.mvillarreal.com
 
 ```
 
